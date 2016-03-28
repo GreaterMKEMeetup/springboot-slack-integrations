@@ -63,11 +63,7 @@ public class BrewCommandHandlers
 	{
 		Function<BrewRequestContext,SlackMessageBuilder> handler = commands.get(handlerName);
 
-		if(handler == null) {
-			throw new RuntimeException("No handler fond for command: " + handlerName);
-		}
-
-		return handler.apply(brc);
+		return handler == null ? null : handler.apply(brc);
 	}
 
 	SlackMessageBuilder help(BrewRequestContext brc) {
