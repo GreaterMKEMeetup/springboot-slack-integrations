@@ -1,0 +1,7 @@
+---
+applications:
+  - name: dm-slack-integrations-2
+    buildpack: java_buildpack
+    path: target/slack-integrations-1.0.0.jar
+  - services:
+    - mysql

@@ -1,0 +1,16 @@
+---
+spring:
+  datasource:
+    url: jdbc:h2:mem
+    username: sa
+    password: sa
+    driverClassName: org.h2.Driver
+  jpa:
+    hibernate.ddl-auto: update
+    show_sql: false
+slack:
+  webhook:
+    url: http://localhost:8080/hookskink
+  brew:
+    brew_master_id: ASDF1234
+    brew_master_username: frodo
