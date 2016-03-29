@@ -10,7 +10,8 @@ spring:
     show_sql: false
 slack:
   webhook:
-    url: http://localhost:8080/hookskink
+    url: http://localhost:9000/hookskink
   brew:
     brew_master_id: ASDF1234
     brew_master_username: frodo
+    valid_command_tokens: asdf1234,qwert5678
