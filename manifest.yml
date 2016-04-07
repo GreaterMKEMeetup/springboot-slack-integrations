@@ -1,6 +1,6 @@
 ---
 applications:
-  - name: dm-slack-integrations-2
+  - name: springboot-slack-integrations
     buildpack: java_buildpack
     path: target/springboot-slack-integrations-1.0.0.jar
   - services:
