@@ -9,8 +9,10 @@ spring:
     hibernate.ddl-auto: update
     show_sql: false
 slack:
+  nashorn:
+    upload_token: A3ufMbZCPBvfUdXeAAmS
   webhook:
-    url: http://localhost:9000/hookskink
+    url: https://hooks.slack.com/services/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
   brew:
     brew_master_id: ASDF1234
     brew_master_username: frodo

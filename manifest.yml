@@ -1,7 +1,7 @@
 ---
 applications:
-  - name: example-slack-integrations
+  - name: dm-slack-integrations-2
     buildpack: java_buildpack
-    path: target/slack-integrations-1.0.0.jar
+    path: target/springboot-slack-integrations-1.0.0.jar
   - services:
     - mysql

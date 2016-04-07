@@ -2,6 +2,7 @@ package org.gmjm.slack.brew.service;
 
 import org.gmjm.slack.api.hook.HookRequest;
 import org.gmjm.slack.api.hook.HookRequestFactory;
+import org.gmjm.slack.api.hook.HookResponse;
 import org.gmjm.slack.api.message.SlackMessageBuilder;
 import org.gmjm.slack.api.model.SlackCommand;
 import org.gmjm.slack.brew.repositories.BrewRepository;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.gmjm.slack.api.hook.HookResponse.Status;
 
 @Service("brewService")
 public class BrewService implements SlackCommandProcessor
@@ -55,7 +57,13 @@ public class BrewService implements SlackCommandProcessor
 			builder.setUsername(COFFEE_BOT_USERNAME);
 
 			HookRequest responseHook = hookRequestFactory.createHookRequest(brc.slackCommand.getResponseUrl());
-			responseHook.send(builder.build());
+
+			HookResponse hookResponse = responseHook.send(builder.build());
+
+			if(Status.FAILED.equals(hookResponse.getStatus())) {
+				logger.error("Failed to send response: " + hookResponse.getMessage());
+			}
+
 		} catch (Exception e) {
 			logger.error("Failed to send hookRequest.",e);
 		}
