@@ -1,4 +1,4 @@
-package org.gmjm.slack.nahsorn;
+package org.gmjm.json;
 
 import java.io.IOException;
 
@@ -13,34 +13,31 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ResourceLoader;
 
 @Configuration
-public class NashornConfig
+public class JsonConsumerConfig
 {
 
 	ScriptLoader scriptLoader = new DynamicScriptLoader();
 
-	@Bean(name="nashornScriptLoader")
+	@Bean(name="jsonConsumerScriptLoader")
 	public ScriptLoader scriptLoader() {
 
 		return scriptLoader;
 	}
 
-	@Bean(name="nashornScriptFactory")
+	@Bean(name="jsonConsumerScriptFactory")
 	public ScriptFactory scriptFactory(ResourceLoader resourceLoader) throws IOException
 	{
 
 		ScriptFactory base = new ScriptFactoryImpl();
 
-		Script slackProcessorPreScript = base.load("slackProcessorPreScript.js",resourceLoader.getResource("classpath:nashorn/slackProcessorPreScript.js").getURI());
-		Script slackProcessorPostScript = base.load("slackProcessorPreScript.js",resourceLoader.getResource("classpath:nashorn/slackProcessorPostScript.js").getURI());
+		Script jsonProcessorPreScript = base.load("jsonProcessorPreScript.js",resourceLoader.getResource("classpath:json/jsonProcessorPreScript.js").getURI());
+		Script jsonProcessorPostScript = base.load("jsonProcessorPostScript.js",resourceLoader.getResource("classpath:json/jsonProcessorPostScript.js").getURI());
 
 		ContextWrapper contextWrapper = new ContextWrapper(
-			slackProcessorPreScript,
-			slackProcessorPostScript,
-			"slackCommand",
-			"hookRequest",
-			"hookRequestFactory",
-			"slackMessageFactory",
-			"inScriptLogger");
+			jsonProcessorPreScript,
+			jsonProcessorPostScript,
+			"logger",
+			"jsonString");
 
 		ScriptFactory scriptFactory = new ScriptFactoryImpl(contextWrapper);
 

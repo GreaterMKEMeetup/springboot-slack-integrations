@@ -4,13 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.gmjm.nashorn.SimpleScript;
 import org.gmjm.script.Script;
-import org.gmjm.script.ScriptFactory;
-import org.gmjm.script.ScriptLoader;
 import org.gmjm.slack.api.model.SlackCommand;
 import org.gmjm.slack.core.model.SlackCommandMapImpl;
-import org.gmjm.slack.nahsorn.service.NashornCommandProcessor;
+import org.gmjm.slack.nahsorn.service.NashornSlackCommandProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +35,7 @@ public class NashornController
 	private String uploadToken;
 
 	@Autowired
-	private NashornCommandProcessor nashornCommandProcessor;
+	private NashornSlackCommandProcessor nashornSlackCommandProcessor;
 
 
 	@RequestMapping(method = RequestMethod.POST, value = "/js")
@@ -53,7 +50,7 @@ public class NashornController
 			return new ResponseEntity<String>("Invalid upload token.",HttpStatus.FORBIDDEN);
 		}
 
-		String newScript = nashornCommandProcessor.loadScript(name, js);
+		String newScript = nashornSlackCommandProcessor.loadScript(name, js);
 
 		return new ResponseEntity<>(newScript, HttpStatus.OK);
 	}
@@ -85,7 +82,7 @@ public class NashornController
 
 			try
 			{
-				nashornCommandProcessor.process(commands[0], sc);
+				nashornSlackCommandProcessor.process(commands[0], sc);
 			} catch (Exception e) {
 				logger.error("Failed",e);
 				return new ResponseEntity<String>("Failed: " + e.getMessage(),HttpStatus.OK);
@@ -101,13 +98,13 @@ public class NashornController
 	@RequestMapping(method = RequestMethod.GET, value = "/script/loaded")
 	public @ResponseBody
 	Set<String> getLoaded() {
-		return nashornCommandProcessor.getLoadedScripts();
+		return nashornSlackCommandProcessor.getLoadedScripts();
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/script/loaded/{name}", produces = "application/javascript")
 	public @ResponseBody
 	String getLoadedBody(@PathVariable String name) {
-		Script script =  nashornCommandProcessor.getLoadedScript(name);
+		Script script =  nashornSlackCommandProcessor.getLoadedScript(name);
 		return script != null ? script.getBody() : "Does Not Exist";
 	}
 
