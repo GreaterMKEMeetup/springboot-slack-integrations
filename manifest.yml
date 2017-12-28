@@ -1,7 +1,8 @@
 ---
 applications:
-  - name: springboot-slack-integrations
-    buildpack: java_buildpack
-    path: target/springboot-slack-integrations-1.0.0.jar
+  - name: slack-events
+    memory: 768M
+    instances: 1
+    random-route: true
   - services:
-    - mysql
+    - redis

@@ -9,6 +9,7 @@ spring:
     hibernate.ddl-auto: update
     show_sql: false
 slack:
+  token: hMChRaQaBl9N3XzC4OfZPeKy
   nashorn:
     upload_token: A3ufMbZCPBvfUdXeAAmS
   webhook:
